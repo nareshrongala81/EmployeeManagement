@@ -1,0 +1,109 @@
+﻿@using System.Web
+@{
+    var isLoggedIn = Session["UserId"] != null;
+    var userName = isLoggedIn ? Session["UserName"]?.ToString() : "Guest";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Employee Management</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa; /* light gray background */
+        }
+
+        main {
+            flex: 1;
+            min-height: 80vh; /* body takes 80% of viewport */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        hr {
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ✅ NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            @Html.ActionLink("Emp Management", "Index", "Home", null, new { @class = "navbar-brand" })
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <!-- ✅ Left links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+                </ul>
+
+                <!-- ✅ Right side: Login / Logout -->
+                <ul class="navbar-nav">
+                    @if (isLoggedIn)
+                    {
+                        <li class="nav-item">
+                            <span class="navbar-text text-white me-3">Welcome, @userName!</span>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-outline-light btn-sm" })
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-outline-light btn-sm me-2" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Signup", "Signup", "Account", null, new { @class = "btn btn-success btn-sm" })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ Main Body -->
+    <main class="container mt-4">
+        @RenderBody()
+        <hr />
+    </main>
+
+    <!-- ✅ Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p class="mb-0">&copy; @DateTime.Now.Year - Employee Management System</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

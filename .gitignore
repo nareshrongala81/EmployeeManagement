@@ -1,0 +1,28 @@
+﻿# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.dbmdl
+*.pdb
+*.exe
+*.dll
+packages/
+TestResults/
+
+# IIS
+_IISExpress/
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+
+# Others
+*.vsix
